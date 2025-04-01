@@ -1,0 +1,19 @@
+rules:
+  - id: disallow-old-tls-versions2
+    languages:
+      - javascript
+    message: Match found
+    patterns:
+      - pattern: |
+          $CONST = require('crypto');
+          ...
+          $OPTIONS = $OPTS;
+          ...
+          https.createServer($OPTIONS, ...);
+      - metavariable-pattern:
+          metavariable: $OPTS
+          patterns:
+            - pattern-not: >
+                {secureOptions: $CONST.SSL_OP_NO_SSLv2 | $CONST.SSL_OP_NO_SSLv3
+                | $CONST.SSL_OP_NO_TLSv1}
+    severity: WARNING

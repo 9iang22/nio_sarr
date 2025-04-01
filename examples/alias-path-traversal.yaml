@@ -1,0 +1,14 @@
+rules:
+- fix-regex:
+    regex: location\s+([A-Za-z0-9/-_\.]+)
+    replacement: location \1/
+  id: alias-path-traversal
+  languages:
+  - generic
+  message: The alias in this location block is vulnerable to path traversal due to
+    the absence of a path separator (e.g., '/') at the end of the location path. Add
+    a path separator to resolve this issue.
+  patterns:
+  - pattern: "location ... {\n  ...\n  alias .../;\n  ...\n}\n"
+  - pattern-not-inside: location /.../ { ... ... }
+  severity: WARNING

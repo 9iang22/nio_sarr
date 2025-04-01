@@ -1,0 +1,13 @@
+rules:
+  - id: scope-of-ellipsis-operator
+    patterns:
+      - pattern: return $X
+      - pattern-either:
+          - pattern: return 42
+          - pattern: |
+              if ... :
+                ...
+    message: Semgrep found a match
+    languages:
+      - python
+    severity: WARNING
